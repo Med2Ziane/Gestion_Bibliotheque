@@ -2,10 +2,11 @@ package Users;
 /**
  * Adherent
  */
+import java.sql.*;
 import java.util.*;
 public abstract class User  {
 
-    private int Id;
+    private String Id;
     private String Nom;
     private String Prenom;
     private String Adresse;
@@ -13,12 +14,18 @@ public abstract class User  {
     private String Email;
     private String Password;// *******************************************//
     private String DateInscription;
+
+    /**********  connection with MySql  **********/
+
+    private static final String url = "jdbc:mysql://localhost:3306/library";
+    private static final String username = "root"; //change the user name and the pass on your device
+    private static final String password = "1290MK";
     /**
      * Constructeur
      */
     public User()
     {
-        this.Id = -1;
+        this.Id = null;
         this.Nom = null;
         this.Prenom = null;
         this.Adresse = null;
@@ -27,7 +34,7 @@ public abstract class User  {
         this.Password = null;
         this.DateInscription = null;
     }
-    public User(int Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription)
+    public User(String Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription)
     {
         this.Id = Id;
         this.Nom = Nom;
@@ -39,9 +46,9 @@ public abstract class User  {
         this.DateInscription = DateInscription;
     }
     // Getters
-    public int getId()
+    public String getId()
     { return Id;}
-    
+
     public String getNom()
     { return Nom;}
 
@@ -64,7 +71,7 @@ public abstract class User  {
     { return DateInscription;}
 
     // Setters
-    public void setId(int Id)
+    public void setId(String Id)
     { this.Id = Id;}
 
     public void setNom(String Nom)
@@ -81,7 +88,7 @@ public abstract class User  {
 
     public void setEmail(String Email)
     { this.Email = Email;}
-    
+
     public void setPassword(String Password)
     { this.Password = Password;}
 
@@ -93,11 +100,72 @@ public abstract class User  {
     public String toString()
     {
         return "User{ Id: " + this.Id+"\nNom: " + this.Nom+"\nPrenom: "
-         + this.Prenom+"\nAdresse: "+ this.Adresse+"\nTelephone: " 
-         + this.Telephone+"\nEmail: " + this.Email+"\nPassword:"+Password+ "\nDateInscription:"+this.DateInscription+"}";
+                + this.Prenom+"\nAdresse: "+ this.Adresse+"\nTelephone: "
+                + this.Telephone+"\nEmail: " + this.Email+"\nPassword:"+Password+ "\nDateInscription:"+this.DateInscription+"}";
+    }
+
+    /********* ajoute modifier supprimer chercher **********/
+
+    public void ajouter(User user) {
+        // Establish database connection
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            String sql = "insert into Users (IdUse,Nom,Prenom,Adresse,Telephone,Email,Pass,DateInscription) value(?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getId());
+            pstmt.setString(2, user.getNom());
+            pstmt.setString(3, user.getPrenom());
+            pstmt.setString(4, user.getAdresse());
+            pstmt.setString(5, user.getTelephone());
+            pstmt.setString(6, user.getEmail());
+            pstmt.setString(7, user.getPassword());
+            pstmt.setString(8, user.getDateInscription());
+
+
+            pstmt.executeUpdate();
+            System.out.println("User ajouté avec succès !");
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'ajout de l'auteur: " + e.getMessage());
+        }
+    }
+    public void modifier(User user){
+        try  (Connection conn = DriverManager.getConnection(url, username, password)){
+            // prepare the SQL statement to update the author's name
+            PreparedStatement statement = conn.prepareStatement("update Users set Nom= ?, Prenom= ?, Adresse= ?, Telephone=? ,Email=? ,Pass=? ,DateInscription=? where IdUse=?");
+            statement.setString(1, user.getNom());
+            statement.setString(2, user.getPrenom());
+            statement.setString(3, user.getAdresse());
+            statement.setString(4, user.getTelephone());
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getPassword());
+            statement.setString(7, user.getDateInscription());
+            statement.setString(8, user.getId());
+
+
+            // execute the update statement
+            statement.executeUpdate();
+            System.out.println("User Change avec succès !");
+        } catch (SQLException e) {
+            System.err.println("Error updating author: " + e.getMessage());
+        }
+    }
+    public void findById(User user) {
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Users WHERE IdUse = ?")) {
+            stmt.setString(1, user.getId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    user.setNom(rs.getString("Nom"));
+                    user.setPrenom(rs.getString("Prenom"));
+                    System.out.println("Author found: " + user.getId() + " - " + user.getNom() +" - " + user.getPrenom());
+                } else {
+                    System.out.println("Author not found.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
-
-
+    /*********************************/
 }
