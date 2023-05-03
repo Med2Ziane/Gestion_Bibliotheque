@@ -1,11 +1,11 @@
 import java.util.*;
 public class Livre {
     private int Id;
-    private String Statut;
+    private Boolean Statut;
      /**
      * Constructeur
      */
-    public Livre(int Id, String Statut) 
+    public Livre(int Id, boolean Statut)
     {
         this.Id = Id;
         this.Statut = Statut;
@@ -13,7 +13,7 @@ public class Livre {
     public Livre()
     {
         this.Id = -1;
-        this.Statut = null;
+        this.Statut = false;
     }
     /**
      * Getters
@@ -21,7 +21,7 @@ public class Livre {
     public int getId()
     { return Id;}
 
-    public String getStatu()
+    public boolean getStatu()
     { return Statut; }
     /**
      * Setters
@@ -29,7 +29,7 @@ public class Livre {
     public void setId(int Id)
     { this.Id = Id;}
 
-    public void setStatut(String Statut)
+    public void setStatut(boolean Statut)
     { this.Statut = Statut; }
      /**
      * @toString Affichage

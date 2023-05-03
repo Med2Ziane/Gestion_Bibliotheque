@@ -1,4 +1,7 @@
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class Reservation {
     /**
@@ -7,9 +10,10 @@ public class Reservation {
     private int Id;
     private Date DateReservation;
     private int IdAdherent;
-    private int IdOuvrage;
+    private int IdOuvrage;//+idlivre
 
-     /**
+
+    /**
      * Constructeur
      */
     public Reservation()
@@ -61,6 +65,6 @@ public class Reservation {
     }
 
 
-   
+
     
 }

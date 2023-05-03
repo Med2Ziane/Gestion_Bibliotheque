@@ -1,16 +1,17 @@
 package Users;
 
+import java.sql.SQLException;
+
 public class Adherent extends User {
     private String Role;
      /**
      * Constructeur
      */
-    public Adherent() {
+    public Adherent() throws SQLException {
         super();
         this.Role="Adherent";
     }
-    public Adherent(int Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription)
-    {
+    public Adherent(String Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription) throws SQLException {
         super(Id, Nom, Prenom, Adresse, Telephone, Email,Password, DateInscription);
         this.Role="Adherent";
     }

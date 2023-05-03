@@ -3,7 +3,8 @@ package Users;
  * Adherent
  */
 import java.sql.*;
-import java.util.*;
+import java.util.Scanner;
+
 public abstract class User  {
 
     private String Id;
@@ -17,14 +18,15 @@ public abstract class User  {
 
     /**********  connection with MySql  **********/
 
-    private static final String url = "jdbc:mysql://localhost:3306/library";
-    private static final String username = "root"; //change the user name and the pass on your device
-    private static final String password = "1290MK";
+    public static final String url = "jdbc:mysql://localhost:3306/library";
+    public static final String username = "root"; //change the user name and the pass on your device
+    public static final String password = "1290MK";
+    Connection conn = DriverManager.getConnection(url, username, password);
+
     /**
      * Constructeur
      */
-    public User()
-    {
+    public User() throws SQLException {
         this.Id = null;
         this.Nom = null;
         this.Prenom = null;
@@ -34,8 +36,7 @@ public abstract class User  {
         this.Password = null;
         this.DateInscription = null;
     }
-    public User(String Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription)
-    {
+    public User(String Id, String Nom, String Prenom, String Adresse, String Telephone, String Email,String Password, String DateInscription) throws SQLException {
         this.Id = Id;
         this.Nom = Nom;
         this.Prenom = Prenom;
@@ -106,19 +107,20 @@ public abstract class User  {
 
     /********* ajoute modifier supprimer chercher **********/
 
-    public void ajouter(User user) {
+    public void ajouter(bibliothecaire bib) {
         // Establish database connection
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String sql = "insert into Users (IdUse,Nom,Prenom,Adresse,Telephone,Email,Pass,DateInscription) value(?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into Users (IdUse,Nom,Prenom,Adresse,Telephone,Email,Pass,DateInscription,Rolee) value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getNom());
-            pstmt.setString(3, user.getPrenom());
-            pstmt.setString(4, user.getAdresse());
-            pstmt.setString(5, user.getTelephone());
-            pstmt.setString(6, user.getEmail());
-            pstmt.setString(7, user.getPassword());
-            pstmt.setString(8, user.getDateInscription());
+            pstmt.setString(1, bib.getId());
+            pstmt.setString(2, bib.getNom());
+            pstmt.setString(3, bib.getPrenom());
+            pstmt.setString(4, bib.getAdresse());
+            pstmt.setString(5, bib.getTelephone());
+            pstmt.setString(6, bib.getEmail());
+            pstmt.setString(7, bib.getPassword());
+            pstmt.setString(8, bib.getDateInscription());
+            pstmt.setString(9, bib.getRole());
 
 
             pstmt.executeUpdate();
@@ -168,4 +170,36 @@ public abstract class User  {
 
 
     /*********************************/
+
+    public static void findusers() throws SQLException {
+        System.out.print("Enter a search term: ");
+        Scanner scanner = new Scanner(System.in);
+        String searchTerm = scanner.next();
+
+
+
+        // Execute a SQL query to search for books matching the search term
+
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Users WHERE IdUse LIKE ? OR Nom LIKE ?")) {
+            //String stmt = "SELECT * FROM Users WHERE IdUse LIKE ? OR Nom LIKE ?";
+
+            //conn = Database.getConnection();
+            stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+            ResultSet rs = stmt.executeQuery();
+
+            // Print out the search results
+            System.out.println("\nSearch results:");
+            System.out.println("***************");
+            while (rs.next()) {
+                System.out.println("User found:");
+                System.out.println("ID: " + rs.getString("id"));
+                System.out.println("Name: " + rs.getString("name"));
+                System.out.println("Email: " + rs.getString("email"));
+                //System.out.println(IdUse + "\t" + Nom + "\t" + Prenom + "\t");
+            }
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
-import java.sql.Date;
+import java.sql.Connection;
+import java.sql.*;
 
 public class Emprunt {
 
@@ -7,6 +8,11 @@ public class Emprunt {
     private Date DateRetour;
     private int IdAdherent;
     private int IdLivre;
+
+    public static final String url = "jdbc:mysql://localhost:3306/library";
+    public static final String username = "root"; //change the user name and the pass on your device
+    public static final String password = "1290MK";
+
 
     public Emprunt()
     {
@@ -68,5 +74,42 @@ public class Emprunt {
         return "Emprunt{" + "Id=" + Id + ", DateEmprunt=" + DateEmprunt + ", DateRetour=" + DateRetour + ", IdAdherent=" + IdAdherent + ", IdLivre=" + IdLivre + '}';
     }
 
+    /*public void emprunter(Emprunt emprunt){
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            // Check if book is available
+            String checkSql = "SELECT nbrLivreLibre FROM ouvrage WHERE idLivre = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, emprunt.idLivre);
+            ResultSet checkResult = checkStmt.executeQuery();
+            if (checkResult.next()) {
+                int livreDisponible = checkResult.getInt("nbrLivreLibre");
+                if (livreDisponible < 1) {
+                    System.out.println("Le livre n'est pas disponible pour l'emprunt.");
+                    return;
+                }
+            } else {
+                System.out.println("Le livre n'existe pas dans la base de données.");
+                return;
+            }
+
+            // Add new emprunt to database
+            String sql = "INSERT INTO emprunt (idLivre, idAdherent, dateEmprunt, estRetourne) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idLivre);
+            pstmt.setString(2, idAdherent);
+            pstmt.setDate(3, new java.sql.Date(dateEmprunt.getTime()));
+            pstmt.setBoolean(4, estRetourne);
+            pstmt.executeUpdate();
+            System.out.println("L'emprunt a été enregistré avec succès.");
+
+            // Update livre's nbrLivreLibre attribute in database
+            String updateSql = "UPDATE ouvrage SET nbrLivreLibre = nbrLivreLibre - 1 WHERE idLivre = ?";
+            PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+            updateStmt.setString(1, idLivre);
+            updateStmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'emprunt: " + e.getMessage());
+        }
+    }*/
     
 }
