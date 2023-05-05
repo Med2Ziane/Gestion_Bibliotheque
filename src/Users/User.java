@@ -107,10 +107,10 @@ public abstract class User  {
 
     /********* ajoute modifier supprimer chercher **********/
 
-    public void ajouter(bibliothecaire bib) {
+    public void ajouterAdh(bibliothecaire bib) {//hadi majal makhddama
         // Establish database connection
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String sql = "insert into Users (IdUse,Nom,Prenom,Adresse,Telephone,Email,Pass,DateInscription,Rolee) value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into Users (IdUse,Nom,Prenom,Adresse,Telephone,Email,Pass,DateInscription,Rolee) value(?, ?, ?, ?, ?, ?, ?, ?, \"Adh\")";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, bib.getId());
             pstmt.setString(2, bib.getNom());
@@ -201,5 +201,6 @@ public abstract class User  {
             }
         }
     }
+
 
 }

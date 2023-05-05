@@ -24,6 +24,11 @@ public class Main {
         String user="root";
         String pass="1290MK";
         try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            Anterface.Header();//afficher Gestion Bibliotheque
+            //Anterface.Sign_Up_Design();//afficher Se Connecter
+
+
+
             System.out.println("Welcome to the Library App!");
 
             // Main loop for user input

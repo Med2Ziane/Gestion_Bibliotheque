@@ -10,7 +10,8 @@ public class Reservation {
     private int Id;
     private Date DateReservation;
     private int IdAdherent;
-    private int IdOuvrage;//+idlivre
+    private int IdOuvrage;
+    private int IdLivre;
 
 
     /**
@@ -22,13 +23,15 @@ public class Reservation {
         this.DateReservation=null;
         this.IdAdherent=-1;
         this.IdOuvrage=-1;
+        this.IdLivre=-1;
     }
-    public Reservation(int Id, Date DateReservation,int IdAdherent,int IdOuvrage)
+    public Reservation(int Id, Date DateReservation,int IdAdherent,int IdOuvrage,int IdLivre)
     {
         this.Id=Id;
         this.DateReservation=DateReservation;
         this.IdAdherent=IdAdherent;
         this.IdOuvrage=IdOuvrage;
+        this.IdLivre=IdLivre;
     }
     /**
      * Getters
@@ -45,6 +48,8 @@ public class Reservation {
     public int getIdOuvrage()
     {return IdOuvrage;}
 
+    public  int getIdLivre()
+    {return IdLivre;}
     /**
      * Setters
      */
@@ -59,9 +64,12 @@ public class Reservation {
 
     public void setIdOuvrage(int IdOuvrage)
     {this.IdOuvrage=IdOuvrage;}
+
+    public void setIdLivre(int IdLivre)
+    {this.IdLivre=IdLivre;}
     @Override
     public String toString() {
-        return "Reservation{" + "Id=" + Id + ", DateReservation=" + DateReservation + ", IdAdherent=" + IdAdherent + ", IdOuvrage=" + IdOuvrage + '}';
+        return "Reservation{" + "Id=" + Id + ", DateReservation=" + DateReservation + ", IdAdherent=" + IdAdherent + ", IdOuvrage=" + IdOuvrage +", IdLivre="+ IdLivre + '}';
     }
 
 

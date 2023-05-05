@@ -9,7 +9,7 @@ public class Anterface {
     static String pass="1290MK";
 
 
-    public void Header()
+    public static void Header()
     {
 
         System.out.println(" " +
@@ -26,7 +26,7 @@ public class Anterface {
                 "██╔══██╗██║██╔══██╗██║     ██║██║   ██║   ██║   ██╔══██║██║▄▄ ██║██║   ██║██╔══╝  \n" +
                 "██████╔╝██║██████╔╝███████╗██║╚██████╔╝   ██║   ██║  ██║╚██████╔╝╚██████╔╝███████╗\n" +
                 "╚═════╝ ╚═╝╚═════╝ ╚══════╝╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝\n" +
-                "                                                                            \n\n\n\n\n\n\n\n");
+                "                                                                            ");
 
     }
 
@@ -64,7 +64,7 @@ public class Anterface {
 
     static boolean loggedIn=false;
     public static void Login(){
-        Statement stmt = null;
+        Statement stmt = null;//hadi declaration diyal lquiry diyql SQL
         try {
             // Register JDBC driver
             //Class.forName(JDBC_DRIVER);
@@ -86,7 +86,7 @@ public class Anterface {
 
             // If the query returns a result, the user exists and their credentials are valid
             if (rs.next()) {
-                role=rs.getString("Rolee");
+                role=rs.getString("Rolee");//hadi tchecke lROLE diyal Luser wach Adh wlla Bib
                 loggedIn=true;
                 System.out.println("Login successful!");
 
@@ -127,9 +127,10 @@ public class Anterface {
         }
         System.out.println("Logged in as " + role);
 
-        while (true) {
-            switch (role) {
-                case "Adh": //hadi ghadi tkhdm min ykoun luser Adherent
+
+        switch (role) {
+            case "Adh": //hadi ghadi tkhdm min ykoun luser Adherent
+                while (true) {
                     System.out.println("1. Afficher Livre");
                     System.out.println("2. Emprunter Livre");
                     System.out.println("3. exit");
@@ -150,7 +151,9 @@ public class Anterface {
                             break;
                     }
                     break;
-                case "Bib"://w hadi ghadi tkhdm min ykoun luser biblithecaire
+                }
+            case "Bib"://w hadi ghadi tkhdm min ykoun luser biblithecaire
+                while (true) {
                     System.out.println("1. Ajouter User");
                     System.out.println("2. Modifier User");
                     System.out.println("3. Supprimer User");
@@ -175,9 +178,10 @@ public class Anterface {
                             break;
                     }
                     break;
+                }
                 default:
                     System.out.println("Invalid role");
-            }
+
         }
     }
 }
