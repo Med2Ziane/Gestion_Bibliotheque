@@ -20,7 +20,7 @@ public abstract class User  {
 
     public static final String url = "jdbc:mysql://localhost:3306/library";
     public static final String username = "root"; //change the user name and the pass on your device
-    public static final String password = "1290MK";
+    public static final String password = "";
     Connection conn = DriverManager.getConnection(url, username, password);
 
     /**

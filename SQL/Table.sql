@@ -43,13 +43,14 @@ create table Reservation (
     */
     IdAdherent varchar(30),
     INSBOuvrage varchar(30),
-    /**/
+    /*----------------------------------------
+    */
     IdLivre varchar(50),
      PRIMARY KEY (IdAdherent, INSBOuvrage),
-    FOREIGN KEY(IdAdherent) REFERENCES Users(IdUse),
-    FOREIGN KEY(INSBOuvrage) REFERENCES Ouvrage(ISBN)
+    CONSTRAINT FK_IdAdherent FOREIGN KEY(IdAdherent) REFERENCES Users(IdUse),
+    CONSTRAINT FK_INSBOuvrage FOREIGN KEY(INSBOuvrage) REFERENCES Ouvrage(ISBN),
 
-    CONSTRAINT FK_IdLivre FOREIGN KEY (IdLivre) references Livre(IdLiv),
+    CONSTRAINT FK_IdLivre FOREIGN KEY (IdLivre) references Livre(IdLiv)
     
 );
 

@@ -22,7 +22,7 @@ public class Main {
 
         String url="jdbc:mysql://localhost:3306/library";
         String user="root";
-        String pass="1290MK";
+        String pass="";
         try (Connection conn = DriverManager.getConnection(url, user, pass)) {
             Anterface.Header();//afficher Gestion Bibliotheque
             //Anterface.Sign_Up_Design();//afficher Se Connecter
